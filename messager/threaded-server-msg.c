@@ -15,6 +15,11 @@
         Author: Tim Wood
         with a little help from
         http://beej.us/guide/bgnet/
+
+        Multi-threaded server that can receive messages from a client
+        and prints them out to screen. Creates a new thread for every
+        incoming client connection.
+
 ****************************************/
 
 int SINGLE_THREAD = 0;
@@ -25,7 +30,6 @@ struct client_info {
 };
 
 void* server_thread(struct client_info* client) {
-        struct sockaddr_storage client_addr;
         int bytes_read;
         char message[256];
 
