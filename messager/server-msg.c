@@ -33,7 +33,7 @@ void server_main(int sockfd) {
                 print_client_ip(client_addr);
 
                 bytes_read = read(clientfd, message, sizeof message);
-                message[bytes_read] = 0; /* ensure no extra garbage is included. */
+                message[bytes_read] = 0; /* telnet fix: ensure no extra garbage is included. */
 
                 if(bytes_read < 0) {
                         perror("ERROR reading socket");
