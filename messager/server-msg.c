@@ -32,15 +32,17 @@ void server_main(int sockfd) {
                 clientfd = accept(sockfd, (struct sockaddr *)&client_addr, &addr_size);
                 print_client_ip(client_addr);
 
-                bytes_read = read(clientfd, message, sizeof message);
-                message[bytes_read] = 0; /* ensure no extra garbage is included. */
-
-                if(bytes_read < 0) {
-                        perror("ERROR reading socket");
+                /* Keep receiving strings until client disconnects. */
+                while(1) {
+                        bytes_read = read(clientfd, message, sizeof message);
+                        if(bytes_read <= 0) {
+                                printf("Client disconnected.\n");
+                                close(clientfd);
+                                break;
+                        }
+                        message[bytes_read] = 0; /* telnet fix: ensure no extra garbage is included. */
+                        printf("Message (%d): [%s]\n", bytes_read, message);
                 }
-                close(clientfd);
-
-                printf("Message (%d): [%s]\n", bytes_read, message);
         }
 }
 

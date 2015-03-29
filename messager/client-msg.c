@@ -66,6 +66,8 @@ int main(int argc, char ** argv)
         sockfd = socket_connect_helper(server_ip, server_port);
 
         client_main(sockfd, message);
+        client_main(sockfd, "message 2");
+        client_main(sockfd, "message 3");
 
         out:
         close(sockfd);
