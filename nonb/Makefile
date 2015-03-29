@@ -4,7 +4,7 @@ CFLAGS =
 DEPS =
 LDFLAGS =
 #Objects created by makefile
-OBJS = nonb-server
+OBJS = nonb-server select-server
 
 #Ensure compiling is done with all necessary dependencies
 %.o: %.c $(DEPS)
@@ -15,6 +15,9 @@ all: $(OBJS)
 rebuild: clean all
 
 nonb-server: nonb-server-msg.c
+	$(CC) $(CFLAGS) -o $@ $^
+
+select-server: select-server-msg.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
