@@ -1,6 +1,7 @@
 # common binaries
 server
 client
+threaded-server
 
 
 # Object files

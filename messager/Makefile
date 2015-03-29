@@ -4,7 +4,7 @@ CFLAGS =
 DEPS =
 LDFLAGS =
 #Objects created by makefile
-OBJS = server client
+OBJS = server client threaded-server
 
 #Ensure compiling is done with all necessary dependencies
 %.o: %.c $(DEPS)
@@ -21,6 +21,8 @@ server: server-msg.c
 client: client-msg.c
 	$(CC) $(CFLAGS) -o $@ $^
 
+threaded-server: threaded-server-msg.c
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	@rm -f $(OBJS)

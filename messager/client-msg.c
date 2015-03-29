@@ -35,12 +35,15 @@ int main(int argc, char ** argv)
         char* server_ip = "127.0.0.1";
         char *message = "Hello World";
         int sockfd;
+        int iterations = 1;
 
         /* Command line args:
                 -p port
                 -h host name or IP
+                -m message to send
+                -i number of times to send message (once per second)
         */
-        while ((o = getopt (argc, argv, "p:h:m:")) != -1) {
+        while ((o = getopt (argc, argv, "p:h:m:i:")) != -1) {
                 switch(o){
                 case 'p':
                         server_port = optarg;
@@ -50,6 +53,9 @@ int main(int argc, char ** argv)
                         break;
                 case 'm':
                         message = optarg;
+                        break;
+                case 'i':
+                        iterations = atoi(optarg);
                         break;
                 case '?':
                         if(optopt == 'p' || optopt == 'h' ) {
@@ -65,7 +71,12 @@ int main(int argc, char ** argv)
 
         sockfd = socket_connect_helper(server_ip, server_port);
 
-        client_main(sockfd, message);
+        while(iterations > 0) {
+                client_main(sockfd, message);
+                printf(".");
+                sleep(1);
+                iterations--;
+        }
 
         out:
         close(sockfd);
